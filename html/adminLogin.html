@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../Css/adminLogin.css" />
+    <script src="../js/library/jquery-3.6.1.min.js"></script>
+    <script src="../js/adminLogin.js"></script>
+  </head>
+  <body>
+    <section class="admin-login-section">
+      <h3>please login in the following form</h3>
+      <input
+        oninput=""
+        type="text"
+        placeholder="user name"
+        id="input-username"
+      />
+      <br />
+      <input
+        oninput=""
+        placeholder="password"
+        id="password-admin"
+        type="password"
+      />
+      <br />
+      <div id="admin-login-error-teller" class="login-error-success">
+        ** error on password or user name
+      </div>
+      <div class="login-error-success" id="sucsess-on-log-in">
+        success on login
+      </div>
+      <button onclick="logInAsAdmin()" id="admin-login">Login</button>
+      <div class="admin-login-progress-teller">login please wait ...</div>
+    </section>
+  </body>
+</html>

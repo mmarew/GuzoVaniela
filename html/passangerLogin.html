@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../Css/passangerLogin.css" />
+    <script src="../js/library/jquery-3.6.1.min.js"></script>
+    <script src="../js/CookiesSetOrGet.js"></script>
+  </head>
+  <body>
+    <section class="passangers-login-section">
+      <h3>Login form to passangers</h3>
+      <form
+        id="passangers-login"
+        action="http://localhost:1010/passanger/login"
+        method="post"
+      >
+        <input
+          name="phoneOrEmail"
+          type="text"
+          id="phone-or-email-passanger"
+          placeholder="phone/email adress "
+        />
+        <button type="submit" id="login-as-passanger">Login</button>
+      </form>
+      <!-- #error-on-passanger-login,#passanger-login-success  -->
+      <div id="wait-on-login">Please wait ...</div>
+      <div id="error-on-passanger-login">Error</div>
+      <div id="passanger-login-success">success</div>
+      <div id="pin-code-holder">
+        <h4>We sent you pin code to your address please insert it below</h4>
+        <input id="pin-code-to-login" type="text" />
+      </div>
+      <div id="adress-not-found">
+        Your address is not registered before.
+        <a href="passangerRegister.html"> click here </a>to sign up now.
+      </div>
+    </section>
+    <script>
+      function submitLogin(e) {
+        e.preventDefault();
+        let emailOrPhone = $("#phone-or-email-passanger").val();
+        console.log("it is ok");
+        fetch("http://localhost:1010/passanger/login", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ phoneOrEmail: emailOrPhone }),
+        })
+          .then((data) => {
+            console.log(data);
+            return data.json();
+          })
+          .then((myData) => {
+            console.log(myData);
+            let cookiesId = myData[0].ID;
+            console.log(cookiesId);
+            setCookie("ActivePassangersId", cookiesId, 2 * 365);
+            window.location.href = "/index.html";
+          });
+      }
+      $("#passangers-login").on("submit", submitLogin);
+    </script>
+  </body>
+</html>

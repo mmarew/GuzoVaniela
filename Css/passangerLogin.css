@@ -1,0 +1,66 @@
+.passangers-login-section {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  background-color: rgb(245, 245, 245);
+  padding: 20px 10px;
+  margin: 20px auto;
+  border-radius: 20px;
+}
+#pin-code-to-login,
+#phone-or-email-passanger {
+  width: 80%;
+  padding: 15px 10px;
+  margin: 0 auto;
+  border-radius: 20px;
+  border-width: 0px;
+}
+#login-as-passanger {
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  width: fit-content;
+  border-radius: 20px;
+  border-width: 0px;
+  margin: 20px auto;
+}
+#adress-not-found {
+  padding: 20px 0;
+}
+
+#error-on-passanger-login,
+#passanger-login-success {
+  background-color: white;
+  padding: 10px 20px;
+  width: 60%;
+  margin: 10px auto;
+  border-radius: 20px;
+  color: green;
+  font-size: 20px;
+  display: none;
+}
+#error-on-passanger-login {
+  color: red;
+}
+.wait-while-register {
+  background-color: black;
+  opacity: 0.8;
+  color: white;
+  margin: 20px;
+  padding: 10px;
+  border-radius: 20px;
+}
+#wait-on-login {
+  background-color: yellow;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  display: none;
+}
+#pin-code-holder {
+  display: none;
+}
+#adress-not-found {
+  display: none;
+}

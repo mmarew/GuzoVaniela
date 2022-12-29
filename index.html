@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Truck transport in ethiopia " />
+    <meta name="keywords" content="Transpot, Truck,Load,guzo, Guzoway, cargo" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guzoway ICT</title>
+    <script src="js/library/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" href="Css/Style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="js/CookiesSetOrGet.js"></script>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li class="mynavclass" id="mynavHomeId">
+          <a href="#banner-section">Home</a>
+        </li>
+        <!-- <li class="mynavclass" id="mynavBookId">
+          <a href="#book-section">Book</a>
+        </li> -->
+        <li class="mynavclass" id="mynavCallId">
+          <a href="#call-section-id">Call</a>
+        </li>
+        <li class="mynavclass" id="mynavScerviceId">
+          <a href="#scervices-section-id"> Scervices</a>
+        </li>
+      </ul>
+    </nav>
+    <main>
+      <section
+        id="banner-section"
+        class="none-map banner-section none-communication"
+      >
+        <div class="signup-or-book">
+          <div class="Book-now"><a href="#book-section">Book now</a></div>
+          <!-- <img class="banner-img" src="Images/list1.png" alt="" /> -->
+          <div class="goto-log-in">
+            <a id="goto-log-in" href="html/passangerLogin.html">Log in</a>
+          </div>
+          <div class="goto-sign-up">
+            <a href="html/passangerRegister.html">Sign up</a>
+          </div>
+        </div>
+      </section>
+      <!-- Booking section -->
+      <section
+        class="book-section none-communication none-map"
+        id="book-section"
+      >
+        <div class="home-booking-panel">
+          <h3>Where do you want to go?</h3>
+
+          <!-- <div>
+          <a style="text-decoration: none" href="tel:+251922112480">
+            Click here to call to center
+          </a>
+          or <br />
+          filll the following form to find online. Thank you.
+        </div> -->
+          <input
+            id="from-adress"
+            type="text"
+            placeholder="From Adress ..... "
+          />
+          <input id="to-address" placeholder="To address .... " />
+          <input
+            id="phone-number"
+            placeholder="Phone number"
+            type="tel"
+            name=""
+          />
+          <select name="" id="select-cra-type">
+            <option value="default">choose Truck</option>
+            <option value="430">
+              <a href="" style="padding: 20px 0px"> Capacity of 430 kuintal</a>
+            </option>
+            <option value="200">Capacity of 200 kuintal</option>
+            <option value="150">Capacity of 150 kuintal</option>
+            <option value="100">Capacity of 100 kuintal</option>
+            <option value="50">Capacity of 50 &nbsp; kuintal</option>
+            <option value="--50">Capacity of small viechels</option>
+          </select>
+          <br />
+          <button
+            onclick="searchTruck('getFromForm','fromForm')"
+            id="get-truck"
+          >
+            Get Truck
+          </button>
+
+          <div onclick="" id="find-truck-load-btn">
+            Searching. please wait ....
+          </div>
+        </div>
+      </section>
+      <!--it comes after  Get Truck  id="get-truck" btn is clicked. so communication with driver starts here -->
+      <section class="communication-part none-map">
+        <div class="drivers-information">
+          <p id="driver-name-now">Driver Name:---------</p>
+          <p id="driver-phone-number-now">Phone number:--------</p>
+          <p id="driver-plate-number-now">plate :--------</p>
+          <p id="driver-car-type-now">car Type : ----</p>
+        </div>
+        <button onclick="cancelCallToDriver()" id="cancelCallToPassanger">
+          Cancel this call
+        </button>
+        <h4>driver is coming to you please wait ....</h4>
+      </section>
+
+      <!-- call section -->
+      <section
+        class="none-map call-section none-communication"
+        id="call-section-id"
+      >
+        <h1>Call To Center</h1>
+        <ul class="contact-us-ul">
+          <li>
+            <a href="tel:+251922112480" class="fa fa-phone">
+              <span> Phone Guzoway </span>
+            </a>
+          </li>
+          <li>
+            <a href="https://telegram.me/Guzoway" class="fa fa-telegram"
+              ><span>Telegram Guzoway</span></a
+            >
+          </li>
+          <li>
+            <a
+              href="https://wa.me/+251922112480?text=Hello!"
+              class="fa fa-whatsapp"
+            >
+              <span> Whats up Guzoway</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- scervice section -->
+      <section
+        class="scervices-section none-communication none-map"
+        id="scervices-section-id"
+      >
+        <h3 style="text-align: center">Trucks in guzoway</h3>
+        <ol class="scervice-ul">
+          <li>
+            <div class="find-now" onclick="searchTruck(430,'from-scervice')">
+              Search Now
+            </div>
+            <img
+              class="truck-img"
+              src="Images/large-430.jpg"
+              alt=""
+              srcset=""
+            />
+            <p>Capacity of 430 kuintal</p>
+          </li>
+          <li>
+            <div onclick="searchTruck(200,'from-scervice')" class="find-now">
+              Search Now
+            </div>
+            <img
+              class="truck-img"
+              src="Images/twohundred.jpg"
+              alt=""
+              srcset=""
+            />
+            <p>Capacity of 200 kuintal</p>
+          </li>
+          <!-- <li>
+          <div onclick="searchTruck(150,'from-scervice')" class="find-now">
+            Search Now
+          </div>
+          <img class="truck-img" src="Images/bgHome.png" alt="" srcset="" />
+          <p>Capacity of 150 kuintal</p>
+        </li> -->
+          <li>
+            <div onclick="searchTruck(100,'from-scervice')" class="find-now">
+              Search Now
+            </div>
+            <img
+              class="truck-img"
+              src="Images/isuuzufsr.jpg"
+              alt=""
+              srcset=""
+            />
+            <p>Isuzu FSR 100 kuintal</p>
+          </li>
+          <li>
+            <div onclick="searchTruck(50,'from-scervice')" class="find-now">
+              Search Now
+            </div>
+            <img
+              class="truck-img"
+              src="Images/van-isuzu.png"
+              alt=""
+              srcset=""
+            />
+            <p>Isuzu NPR 50 &nbsp; kuintal</p>
+          </li>
+          <!-- <li>
+          <div onclick="searchTruck(--50,'from-scervice')" class="find-now">
+            Search Now
+          </div>
+          <img class="truck-img" src="Images/bgHome.png" alt="" srcset="" />
+          <p>Capacity of small viechels</p>
+        </li> -->
+        </ol>
+      </section>
+      <!-- end to scervices section -->
+    </main>
+    <guzoMap id="google-map-section">
+      <div id="mapDisplayerId"></div>
+    </guzoMap>
+    <footer></footer>
+    <script src="js/index.js"></script>
+    <script src="js/googleMap.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC25cJ6S9ZKoFroBrEVKabX0-hMlEJPx28&callback=callGuzoMap"></script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Driver</title>
+    <audio id="TaxiCallerSound" src="../Images/TaxiCallerSound.mp4"></audio>
+    <link rel="stylesheet" href="/Css/Driver.css" />
+    <script src="../js/library/jquery-3.6.1.min.js"></script>
+    <script src="../js/CookiesSetOrGet.js"></script>
+  </head>
+  <body onunload="onDriversWindowClosed()">
+    <nav>
+      <ul>
+        <li>Home</li>
+        <li>text</li>
+        <li>text</li>
+      </ul>
+    </nav>
+    <section class="drivers-home">
+      <!-- wait customers request to Load -->
+      <h4 id="wait-to-customers-request" class="waiting-for-customer">
+        Waiting for customer request
+      </h4>
+      <div class="customer-witing-wrapper">
+        <!-- <div class="customers-issues custommers-destination-standing-point">
+          <br />
+          standing point ---------- <br />
+          destination point --------
+        </div> -->
+        <div class="customers-issues customers-info">
+          customers-phone------- <br />
+          customer name ---
+        </div>
+      </div>
+      <button
+        class="decline-call answer-decline drivers-btn"
+        onclick="rejectCustomerCall()"
+      >
+        Decline
+      </button>
+      <button
+        class="accept-call answer-decline drivers-btn"
+        onclick="answerToCustomer()"
+      >
+        Answer
+      </button>
+      <button class="add-cusomer drivers-btn" onclick="addCustomer()">
+        Add Customer
+      </button>
+    </section>
+    <section id="customer-adder-section">
+      <input
+        type="text"
+        id="customer-phone-number"
+        placeholder="Type customer Phone number here"
+      />
+      <button id="add-customer-byphone-number">Save</button>
+    </section>
+
+    <section class="journey-to-destination">
+      <div id="drivers-map">Map will points here. i</div>
+    </section>
+    <script src="/js/Driver.js"></script>
+  </body>
+</html>

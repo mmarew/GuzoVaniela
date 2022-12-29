@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/library/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" href="../Css/admin.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li
+          onclick="adminNavManager('nav-li', 'nav-li-register')"
+          class="nav-li nav-li-register"
+        >
+          <a href="#section-register-drivers">Register </a>
+        </li>
+        <li
+          onclick="adminNavManager('nav-li', 'nav-li-search')"
+          class="nav-li nav-li-search"
+        >
+          <a href="#view-informations">Search </a>
+        </li>
+        <li></li>
+      </ul>
+    </nav>
+    <!-- update drivers information start  here -->
+    <section class="section-update-drivers">
+      <h3>Drivers update form</h3>
+      <input
+        class="driver-info update-plate-number"
+        type="text"
+        placeholder="update plate number "
+      />
+      <input
+        class="driver-info update-driver-name"
+        type="text"
+        placeholder=" Update drivers name"
+      />
+
+      <input
+        class="driver-info update-licence-number"
+        type="text"
+        placeholder="Update licence number"
+      />
+      <input
+        class="driver-info update-phone-number"
+        type="text"
+        placeholder="Update Phone number "
+      />
+      <br /><br />
+      Update Driving Licence picture <br /><br />
+      <input type="file" class="update-drivers-licence-picture" /> <br /><br />
+      <div id="error-on-drivers-update">** error on update</div>
+      <div id="update-success-on-driver">success on update</div>
+      <button onclick="updateDriversInformation()" id="btn-update-driver">
+        update
+      </button>
+
+      <div class="wait-while-register">wait while updating ....</div>
+    </section>
+
+    <!-- update drivers information end here -->
+    <!-- register drivers start here -->
+    <section class="section-register-drivers" id="section-register-drivers">
+      <h3>Drivers Registration form</h3>
+      <input
+        class="driver-info register-plate-number"
+        type="text"
+        placeholder="plate number------ -----"
+      />
+      <input
+        class="driver-info register-driver-name"
+        type="text"
+        placeholder=" drivers name ----- ----"
+      />
+      <input
+        class="driver-info register-licence-number"
+        type="text"
+        placeholder="licence number ---"
+      />
+      <input
+        class="driver-info register-phone-number"
+        type="text"
+        placeholder="Phone number ---"
+      />
+      <br /><br />
+      Licence picture
+      <input type="file" id="register-drivers-licence-picture" /> <br /><br />
+      <div id="error-on-drivers-register">** Error on registration</div>
+      <div id="register-success-on-driver">Success on registration</div>
+      <button onclick="registerDriversInGW()" id="btn-register-driver">
+        register
+      </button>
+
+      <div class="wait-while-register">Wait while registering ....</div>
+    </section>
+    <!-- register drivers end here -->
+
+    <!-- view informations start here -->
+    <section class="view-informations" id="view-informations">
+      <input
+        type="search"
+        oninput="searchDriversOrPassangersInformation()"
+        placeholder="type passanger name or driver name "
+        name=""
+        id="search-driver-passanger"
+      />
+      <select name="" id="select-to-be-searched">
+        <option value="default">Select to be searched</option>
+        <option value="driver-journey">Drivers Journey</option>
+        <option value="driver-info">Drivers Info</option>
+        <option value="passangers-info">passanger Info</option>
+        <option value="passangers-journey">passanger Journey</option>
+      </select>
+      <div style="width: fit-content" class="wait-while-register">
+        please wit while getting datas.....
+      </div>
+      <!-- to update drivers only -->
+      <table id="drivers-info-from-search">
+        <tr>
+          <th>No</th>
+          <th class="id1">Drivers name</th>
+          <th class="id2">Plate 2</th>
+          <th class="id3">Licence number</th>
+          <th class="id4">phone number</th>
+          <th class="id5">Action</th>
+        </tr>
+        <tr>
+          <td id="update1">marew</td>
+          <td id="update2">3-980et</td>
+          <td id="update3">l-08978</td>
+          <td id="update4">0922112480</td>
+          <td id="update5">8989898</td>
+          <td
+            onclick="setDriversInformationOnUpdateForm('update1',
+          'update2','update3','update4','update5')"
+            class="update-btn-fromsearch"
+            id="update"
+          >
+            <a href="#updateDriversInfo"> update</a>
+          </td>
+        </tr>
+      </table>
+      <br /><br />
+      <!-- to see drivers driving datas only  -->
+      <table id="drivers-journey-info">
+        <tr>
+          <th>No</th>
+          <th>journey Id</th>
+          <th>driver name</th>
+          <th>plate number</th>
+          <th>licence number</th>
+          <th>phone-number</th>
+          <th>starting date</th>
+          <th>destination date</th>
+          <th>starting point</th>
+          <th>desination point</th>
+          <th>customer name/info</th>
+          <th>totalpayed money</th>
+          <th>price</th>
+          <th>Distance</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>journey Id</td>
+          <td>driver name</td>
+          <td>plate number</td>
+          <td>licence number</td>
+          <td>phone-number</td>
+          <td>starting date</td>
+          <td>destination date</td>
+          <td>starting point</td>
+          <td>desination point</td>
+          <td>customer name/info</td>
+          <td>total payed money</td>
+          <td>price</td>
+          <td>90 km</td>
+        </tr>
+      </table>
+      <!-- to see passangers data only -->
+      <br />
+      <table>
+        <tr>
+          <th>No</th>
+          <th>passanger name</th>
+          <th>phone number</th>
+          <th>status</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Marew masrsha</td>
+          <td>+251922112480</td>
+          <td>
+            <select name="" id="">
+              <option value="green">Green</option>
+              <option value="green">Red</option>
+              <option value="yellow">Yellow</option>
+            </select>
+          </td>
+          <td
+            onclick="updatePassangersInfo('passangerName','phone',
+          'status','')"
+            class="update-btn-fromsearch"
+          >
+            update
+          </td>
+        </tr>
+      </table>
+      <br />
+      <!-- passangers journey status -->
+      <table>
+        <tr>
+          <th>No</th>
+          <th>passangers name</th>
+          <th>phone number</th>
+          <th>starting point</th>
+          <th>Ending points</th>
+          <th>JourneyId</th>
+          <th>drivers name</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td><a href="">Marew</a></td>
+          <td>+251922112480</td>
+          <td>Diredawa</td>
+          <td>Addis ababa</td>
+          <td><a href="#drivers-info-from-search">Journey Id</a></td>
+          <td><a href="#drivers-info-from-search">drivers name</a></td>
+        </tr>
+        <!-- drivers name shuould be link and refere to drivers data tabel #drivers-info-from-search-->
+      </table>
+    </section>
+    <!-- view informations end here -->
+
+    <script src="../js/admin.js"></script>
+  </body>
+</html>

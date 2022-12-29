@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/library/jquery-3.6.1.min.js"></script>
+    <style>
+      form {
+        background-color: rgb(245, 245, 245);
+        margin: auto;
+        width: fit-content;
+        padding: 10px;
+      }
+      form input {
+        padding: 8px;
+        border-radius: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- driversFullName,driversLiscenceNumber, driverPlateNumber-->
+    <br />
+    <br />
+    <br />
+    <form action="/drivers/register" method="post">
+      <h4>Drivers registration Form</h4>
+      <input
+        required
+        placeholder="drivers Full name"
+        name="driversFullName"
+        type="text"
+        id="driversFullName"
+      /><br /><br />
+      <input
+        required
+        placeholder="drivers Lisence name"
+        name="driversLiscenceNumber"
+        type="text"
+        id="driversLiscenceNumber"
+      /><br /><br />
+      <input
+        required
+        placeholder="Plate Number"
+        name="driverPlateNumber"
+        type="text"
+        id="driverPlateNumber"
+      /><br /><br />
+      <input
+        required
+        name="driversPhoneNumber"
+        id="driversPhoneNumber"
+        type="tel"
+        placeholder="phone number"
+      />
+      <br />
+      <br />
+      <button type="submit" id="driversName">Register</button>
+    </form>
+    <script>
+      $("form").on("submit", submitDriversRegistration);
+      function submitDriversRegistration(e) {
+        e.preventDefault();
+         
+        let driversFullName = $("#driversFullName").val(),
+          driversPhoneNumber = $("#driversPhoneNumber").val(),
+          driversLiscenceNumber = $("#driversLiscenceNumber").val(),
+          driverPlateNumber = $("#driverPlateNumber").val();
+        console.log("driversFullName", driversFullName);
+        fetch("http://localhost:1010/drivers/register", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            driversPhoneNumber: driversPhoneNumber,
+            driversFullName: driversFullName,
+            driversLiscenceNumber: driversLiscenceNumber,
+            driverPlateNumber: driverPlateNumber,
+          }),
+        })
+          .then((data) => {
+            console.log(data);
+            return data.json();
+          })
+          .then((data) => {
+            console.log(data);
+            if (data.driversFullName == driversFullName)
+              alert("thank you for registering.");
+            window.location.href = "/html/driverLogin.html";
+          });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+- AIzaSyC25cJ6S9ZKoFroBrEVKabX0-hMlEJPx28 my key to guzogo
+-ActiveDriverId= drivers login html file has cookies and cookies is ActiveDriverId='id'
+-ActivePassangersId=when passangers start booking , if cookies of ActiveDriverId is '' it asks to login and in login process it set ActiveDriverId in cookies
+state of drivers ation online case
+1) Active=>requestedByPassangers=>answeredToPassangers=>RejectedByDriver=>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .passanger-registration-form {
+        max-width: 500px;
+        background-color: rgb(245, 245, 245);
+        margin: 20px auto;
+        border-radius: 20px;
+        text-align: center;
+        padding: 30px 10px;
+      }
+      .passanger-registration-form input {
+        padding: 10px 15px;
+        border-radius: 20px;
+        width: 80%;
+        margin: 10px 0;
+        border-width: 0px;
+        max-width: 300px;
+      }
+      .passanger-registration-form input:focus {
+        outline: none !important;
+        border: 1px solid blue;
+        box-shadow: 0 0 10px #719ece;
+      }
+      #register-passanger {
+        background-color: blue;
+        color: white;
+        padding: 10px 20px;
+        width: 70px;
+        border-radius: 20px;
+        margin: 10px auto;
+      }
+      #error-on-passanger-register,
+      #register-success {
+        background-color: white;
+        padding: 10px 20px;
+        width: 60%;
+        margin: 10px auto;
+        border-radius: 20px;
+        color: green;
+        font-size: 17px;
+        display: none;
+      }
+      #error-on-passanger-register {
+        color: red;
+      }
+      .wait-while-register {
+        background-color: black;
+        opacity: 0.8;
+        color: white;
+        margin: 20px;
+        padding: 10px;
+        border-radius: 20px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <form
+      method="post"
+      action="http://localhost:1010/register/passangers"
+      class="passanger-registration-form"
+    >
+      <h3>Registration form for passangers</h3>
+      <input
+        name="fullName"
+        type="text"
+        placeholder="Enter full name"
+        id="fullname"
+      />
+      <input
+        name="phoneNumber"
+        type="text"
+        placeholder="Enter phone number"
+        id="telephone-NO"
+      />
+      <!-- emaillAdress,phoneNumber,fullName  -->
+      <input
+        name="emaillAdress"
+        type="text"
+        id="email-address"
+        placeholder="enter email addrress"
+      />
+      <div id="register-success">successfully registered</div>
+      <div id="error-on-passanger-register">** error on registration</div>
+      <div class="wait-while-register">Please wait while register ...</div>
+      <div>
+        <input id="register-passanger" type="submit" />
+      </div>
+    </form>
+  </body>
+</html>

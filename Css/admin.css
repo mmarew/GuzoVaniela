@@ -1,0 +1,128 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+.section-update-drivers,
+.section-register-drivers {
+  background-color: rgb(245, 245, 245);
+  max-width: 400px;
+  text-align: center;
+  margin: 60px auto;
+  padding: 20px 3px;
+  border-radius: 20px;
+}
+.driver-info {
+  width: 80%;
+  margin-top: 20px;
+  padding: 10px 5%;
+  border-radius: 20px;
+  border-width: 0px;
+}
+#btn-update-driver,
+#btn-register-driver {
+  border-width: 0;
+  background-color: blue;
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: white;
+}
+.wait-while-register {
+  background-color: black;
+  opacity: 0.8;
+  color: white;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 20px;
+  width: fit-content;
+}
+/* 1000488723018 */
+nav {
+  position: fixed;
+  top: 0;
+  background-color: black;
+  width: 100%;
+  color: white;
+  padding: 10px 0;
+}
+nav ul {
+  display: flex;
+  list-style: none;
+  max-width: 400px;
+  justify-content: space-around;
+  margin: auto;
+}
+nav ul li {
+  padding: 10px 15px;
+}
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  margin: 0 10px;
+}
+table,
+td,
+th {
+  border: 1px solid black;
+  margin: auto;
+}
+.view-informations {
+  text-align: center;
+  background-color: rgb(245, 245, 245);
+  padding: 30px 0;
+  margin-top: 60px;
+}
+#search-driver-passanger {
+  width: min(100%, 350px);
+  padding: 10px 15px;
+  border-radius: 15px;
+  border-width: 0px;
+}
+#update-success-on-driver,
+#error-on-drivers-update,
+#error-on-drivers-register,
+#register-success-on-driver {
+  background-color: white;
+  padding: 10px 20px;
+  width: 60%;
+  margin: 10px auto;
+  border-radius: 20px;
+  color: green;
+  font-size: 20px;
+}
+#error-on-drivers-update,
+#error-on-drivers-register {
+  color: red;
+}
+input:focus {
+  border: 1px solid rgb(170, 191, 214);
+  border-color: blue;
+}
+.update-btn-fromsearch {
+  background-color: blue;
+  border-width: 0px;
+  padding: 8px 15px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  margin: 10px 5px;
+}
+.update-btn-fromsearch a {
+  text-decoration: none;
+  color: white;
+}
+.active {
+  background-color: blue;
+  border-radius: 10px;
+}
+section {
+  display: none;
+}
+#select-to-be-searched {
+  padding: 8px;
+  border-radius: 10px;
+} 
+#select-to-be-searched option {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 20px;
+}
