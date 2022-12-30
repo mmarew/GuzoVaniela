@@ -159,7 +159,8 @@ function passangersHashManager() {
 }
 
 function cancelCallToDriver() {
-  let Verify = confirm("Are you sure to cancel this call ");
+  // console.log("ActivePassangersId = " + ActivePassangersId);
+  let Verify = confirm("Are you sure to cancel this call?");
   if (Verify) {
     fetch("http://localhost:1010/cancellCallToDriver", {
       method: "POST",
@@ -178,7 +179,7 @@ function cancelCallToDriver() {
       .then((data) => {
         console.log(data);
         deleteCookies("connectedDriver");
-        // window.location.href = "/";
+        window.location.href = "/index.html";
         if (driversGuzoMarker != "") {
           driversGuzoMarker.setMap(null);
         }
@@ -214,8 +215,8 @@ function checkDriversDecision() {
       return data.json();
     })
     .then((object) => {
-      // console.log(object);
       let datas = object[0];
+      // console.log(datas);
       // if passanger dosen't have data (no driver online ) object.length  is 0 so re request truck has to be done in if if (object.length == 0) {}
       // console.log("connectedDriver = " + getCookie("connectedDriver"));
       if (object.length == 0) {
@@ -285,6 +286,7 @@ function checkDriversDecision() {
           // console.log("requested By Passangers");
           $("#get-truck").hide();
           $("#find-truck-load-btn").show();
+          $("#CancelRequest").show();
         } else if (Status == "answeredToPassangers") {
           // console.log("answered To Passangers");
           checkIfPassangerAskedDriver();
