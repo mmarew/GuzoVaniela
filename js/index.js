@@ -1,4 +1,7 @@
+let setIntervalToDriversDecision = "";
 let ActivePassangersId = getCookie("ActivePassangersId"),
+  connectedOnlineId = getCookie("connectedOnlineId"),
+  previousStatus = "Initial",
   passangersStatus = "Initial";
 //- passangersStatus is used for manage (Searching. please wait ..) button and get truck button.
 // -it is requestingToGetDriver when driver is looking for truck and enables to hide get truck btn but to show searching info div
@@ -8,7 +11,7 @@ function checkIfPassangerAskedDriver() {
   //To check if passanger asked drivers , get saved active driver from cookies, where connectedDriver is saved in cookies
   // return;
   let driver = getCookie("connectedDriver");
-  console.log(driver);
+  // console.log(driver);
   if (driver == "noData") {
     return driver;
   }
@@ -38,13 +41,21 @@ function searchTruck() {
     toAddress = $("#to-address").val(),
     phoneNumber = $("#phone-number").val(),
     selectCraType = $("#select-cra-type").val();
+  let error = 0;
   if (selectCraType == "default") {
     $("#select-cra-type").css("border", "1px solid red ");
     alert("please choose car type first");
+    error++;
   }
   if (phoneNumber == undefined || phoneNumber == "") {
     alert("phoneNumber is mandatory");
     $("#phone-number").css("border", "1px solid red ");
+    error++;
+  } 
+  if (error > 0) {
+    $("#find-truck-load-btn").hide();
+    $("#get-truck").show();
+    $("#CancelRequest").hide();
     return;
   }
   $("#find-truck-load-btn").show();
@@ -80,6 +91,11 @@ function searchTruck() {
         return;
       } else {
         passangersStatus = "Initial";
+        // clear if it was in interval requesting state
+        clearInterval(setIntervalToDriversDecision);
+        setIntervalToDriversDecision = setInterval(() => {
+          checkDriversDecision();
+        }, 2000);
       }
     });
 }
@@ -178,6 +194,7 @@ function cancelCallToDriver() {
       })
       .then((data) => {
         console.log(data);
+        // return;
         deleteCookies("connectedDriver");
         window.location.href = "/index.html";
         if (driversGuzoMarker != "") {
@@ -186,7 +203,6 @@ function cancelCallToDriver() {
       });
   }
 }
-let setIntervalToDriversDecision = "";
 let timeIntervalCounter = () => {};
 setIntervalToDriversDecision = setInterval(() => {
   checkDriversDecision();
@@ -208,15 +224,16 @@ function checkDriversDecision() {
     },
     body: JSON.stringify({
       ActivePassangersId: ActivePassangersId,
+      connectedOnlineId: connectedOnlineId,
     }),
   })
     .then((data) => {
-      // console.log(data);
       return data.json();
     })
     .then((object) => {
       let datas = object[0];
-      // console.log(datas);
+      console.log(object);
+      console.log("connectedOnlineId = ", connectedOnlineId);
       // if passanger dosen't have data (no driver online ) object.length  is 0 so re request truck has to be done in if if (object.length == 0) {}
       // console.log("connectedDriver = " + getCookie("connectedDriver"));
       if (object.length == 0) {
@@ -242,10 +259,15 @@ function checkDriversDecision() {
         } else {
           $("#get-truck").show();
           $("#find-truck-load-btn").hide();
+          $("#CancelRequest").hide();
         }
         // window.location.href = "#book-section";
         checkIfPassangerAskedDriver();
+        callToAll();
       } else {
+        console.log(datas.onlineId);
+        setCookie("connectedOnlineId", datas.onlineId, 2 * 2);
+        connectedOnlineId = getCookie("connectedOnlineId");
         let driversName = datas.driversName,
           driversPhoneNumber = datas.driversPhoneNumber,
           plateNumber = datas.plateNumber;
@@ -254,15 +276,6 @@ function checkDriversDecision() {
         driversLat = driversLocation.Lat + 0.001;
         drivarsLan = driversLocation.Lan + 0.001;
         callToAll();
-        // console.log(
-        //   " driversLat = ",
-        //   driversLat,
-        //   " drivarsLan = ",
-        //   drivarsLan,
-        //   " Lat = " + Lat,
-        //   " Lan = " + Lan
-        // );
-
         let SavedDriverNAme = connectedDriver;
         if (connectedDriver != "noData")
           SavedDriverNAme = JSON.parse(connectedDriver).driversName;
@@ -282,7 +295,24 @@ function checkDriversDecision() {
         }
         let Status = object[0].Status;
         // based on status decision will be done here
-        if (Status == "requestedByPassangers") {
+        console.log("previousStatus = " + previousStatus);
+        if (Status == "RejectedByDriver") {
+          clearInterval(setIntervalToDriversDecision);
+          clearInterval(setIntervalToDriversDecision);
+          console.log(Status);
+          deleteCookies("connectedOnlineId");
+          deleteCookies("connectedDriver");
+          if (previousStatus == "answeredToPassangers") {
+            // driver canceled after responce
+            alert("Driver canceled your request");
+            window.location.href = "/index.html";
+          } else if (previousStatus == "requestedByPassangers") {
+            // driver canceled before responce
+
+            searchTruck();
+          }
+          return;
+        } else if (Status == "requestedByPassangers") {
           // console.log("requested By Passangers");
           $("#get-truck").hide();
           $("#find-truck-load-btn").show();
@@ -294,6 +324,7 @@ function checkDriversDecision() {
         } else if (Status == "Active") {
           // console.log("Active");
         }
+        previousStatus = Status;
       }
     });
 }
@@ -325,4 +356,3 @@ function cancelPassangersRequest() {
       });
   }
 }
-// cancelPassangersRequest();

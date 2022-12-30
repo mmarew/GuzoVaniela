@@ -37,7 +37,7 @@ function answerToCustomer(actionInDatabase) {
   console.log("it is driver console");
   $("#wait-to-customers-request").hide();
   $(".customer-witing-wrapper").show();
-  if (actionInDatabase != "answeredToPassangers") {
+  if (actionInDatabase == "GiveAnswerToPassangers") {
     // if driver is answering for first time
     sendUpdateForDriversAnswer();
   }
@@ -114,7 +114,7 @@ function checkCustomers() {
       return data.json();
     })
     .then((data) => {
-      // console.log(data);
+      console.log(data);
       if (data.length == 0) {
         // deleteCookies("ActiveDriverId");
         myIdInCookies = getCookie("ActiveDriverId");
@@ -144,7 +144,7 @@ function checkCustomers() {
           // console.log(" ", passangerInfo.Status);
           // console.log("DriversAction", DriversAction);
         } else if (passangerInfo.Status == "answeredToPassangers") {
-          answerToCustomer();
+          answerToCustomer('alreadyAnswered');
         }
       }
     });

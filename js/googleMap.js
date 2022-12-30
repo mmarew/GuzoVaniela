@@ -4,9 +4,9 @@ let Lat = "",
   driversGuzoMarker = "",
   guzoMarker = "",
   guzoMap = "",
-  driverCenter = "";
-driversLat = Lat;
-drivarsLan = Lan;
+  driverCenter = "",
+  driversLat = "";
+drivarsLan = "";
 
 function navigtionTaller() {
   if (navigator.geolocation) {
@@ -54,8 +54,8 @@ function showGuzoMap(callFrom) {
     mapProp
   );
 
-  driversLat = Lat + 0.0009;
-  drivarsLan = Lan + 0.0009;
+  // driversLat = Lat + 0.0009;
+  // drivarsLan = Lan + 0.0009;
   console.log(
     "distance between tow line ",
     distance(Lat, Lan, driversLat, drivarsLan, "K")
@@ -81,51 +81,60 @@ function distance(lat1, lon1, lat2, lon2, unit) {
   }
   return dist;
 }
-navigtionTaller();
 let TimeCounter = 0;
 function callToAll() {
+  // console.log("driversLat = " + driversLat, " drivarsLan=" + drivarsLan);
+  // console.log("lat = " + Lat, " lan=" + Lan);
+  Lat = Number(Lat);
+  Lan = Number(Lan);
   TimeCounter++;
   // change after 6 second to minimize eye view consistancy if it was in 2 or 1 second drop pin ball may be not seen as good
-  if (TimeCounter % 3 == 0) {
+  if (TimeCounter % 4 == 0) {
     if (guzoMarker != "") {
       guzoMarker.setMap(null);
     }
     if (driversGuzoMarker != "") {
       driversGuzoMarker.setMap(null);
     }
-    driverCenter = new google.maps.LatLng(driversLat, drivarsLan);
     guzoMarker = new google.maps.Marker({
       Position: guzoCenter,
       animation: google.maps.Animation.BOUNCE,
     });
-    driversGuzoMarker = new google.maps.Marker({
-      Position: driverCenter,
-      animation: google.maps.Animation.BOUNCE,
-    });
-    driversGuzoMarker.setMap(guzoMap);
     guzoMarker.setMap(guzoMap);
-    // var infowindow = new google.maps.InfoWindow({
-    //   content: "you are here!",
-    // });
+    if (driversLat != "" && drivarsLan != "") {
+      driverCenter = new google.maps.LatLng(driversLat, drivarsLan);
+      driversGuzoMarker = new google.maps.Marker({
+        Position: driverCenter,
+        animation: google.maps.Animation.BOUNCE,
+      });
+      driversGuzoMarker.setMap(guzoMap);
+    }
+    var infowindow = new google.maps.InfoWindow({
+      content: "you are here!",
+    });
 
-    // infowindow.open(guzoMap, guzoMarker);
+    infowindow.open(guzoMap, guzoMarker);
 
-    // var infowindow = new google.maps.InfoWindow({
-    //   content: "Driver is here!",
-    // });
+    var infowindow = new google.maps.InfoWindow({
+      content: "Driver is here!",
+    });
 
-    // infowindow.open(guzoMap, driversGuzoMarker);
-    // var myTrip = [
-    //   // Lat, Lan
-    //   { lat: Lat, lng: Lan },
-    //   { lat: driversLat, lng: drivarsLan },
-    // ];
-    // var flightPath = new google.maps.Polyline({
-    //   path: myTrip,
-    //   strokeColor: "red",
-    //   strokeOpacity: 0.8,
-    //   strokeWeight: 2,
-    // });
-    // flightPath.setMap(guzoMap);
+    infowindow.open(guzoMap, driversGuzoMarker);
+    if (driversLat != "" && drivarsLan != "" && Lan != "" && Lat != "") {
+      var myTrip = [
+        // Lat, Lan
+        { lat: Lat, lng: Lan },
+        { lat: driversLat, lng: drivarsLan },
+      ];
+      var flightPath = new google.maps.Polyline({
+        path: myTrip,
+        strokeColor: "red",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+      });
+      flightPath.setMap(guzoMap);
+    }
   }
 }
+
+navigtionTaller();

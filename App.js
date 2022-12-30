@@ -107,7 +107,7 @@ app.post("/getOnlineDrivers", (req, res) => {
     if (err) console.log(err);
     else console.log(result);
     console.log("table online is created well ");
-  }); 
+  });
   // it is ok
   // -check if i have already requested
   let checkIfIHaveRequested = `select * from onlineDrivers where passangersId='${passangersId}' and 
@@ -261,8 +261,29 @@ app.post("/cancellCallToDriver", (req, res) => {
 });
 app.post("/checkDriversDecision", (req, res) => {
   let PassangersId = req.body.ActivePassangersId,
-    driversLocation = req.body.Location;
+    driversLocation = req.body.Location,
+    connectedOnlineId = req.body.connectedOnlineId;
   console.log(PassangersId);
+  // res.end("connectedOnlineId " + connectedOnlineId);
+  // return;
+  if (connectedOnlineId != "noData") {
+    // it check connected driver and aim is , if driver reject passangers call, passanger will be informed as driver rejected it
+    let checkOnline = `select * from onlineDrivers join driversTable where
+    driversTable.driversId = onlineDrivers.driversId and passangersId='${PassangersId}' and
+    onlineId = '${connectedOnlineId}'`;
+    connection.query(checkOnline, (err, result) => {
+      if (err) {
+        console.log(err);
+        // res.json(err);
+      } else {
+        if (result.length > 0) {
+          res.json(result);
+        }
+        // else case
+      }
+    });
+    return;
+  }
   let getDriversInfo = `select * from onlineDrivers join driversTable where
    driversTable.driversId = onlineDrivers.driversId and passangersId='${PassangersId}' and (Status='requestedByPassangers' or Status='answeredToPassangers' or Status='Active') limit 1`;
   connection.query(getDriversInfo, (err, result) => {
