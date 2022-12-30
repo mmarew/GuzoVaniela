@@ -207,7 +207,6 @@ let timeIntervalCounter = () => {};
 setIntervalToDriversDecision = setInterval(() => {
   checkDriversDecision();
 }, 2000);
-
 let refCounter = true;
 function checkDriversDecision() {
   // -it is managed by setinterval to check drivers decision because driver may answer,
