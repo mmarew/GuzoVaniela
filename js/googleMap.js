@@ -139,9 +139,9 @@ function displayMApWithPolyline() {
       ];
       var flightPath = new google.maps.Polyline({
         path: myTrip,
-        strokeColor: "red",
+        strokeColor: "blue",
         strokeOpacity: 0.8,
-        strokeWeight: 2,
+        strokeWeight: 4,
       });
       flightPath.setMap(guzoMap);
     }
