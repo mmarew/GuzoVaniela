@@ -131,8 +131,6 @@ function passangersHashManager() {
     $(".communication-part").show();
   } else if (myHash == "#banner-section") {
     console.log("#banner-section");
-    // $("#banner-section").show();
-    // alert(ActivePassangersId)
     if (ActivePassangersId == "noData") {
       console.log(ActivePassangersId);
       $("#goto-log-in")[0].click();
@@ -285,9 +283,9 @@ function checkDriversDecision() {
           plateNumber = datas.plateNumber;
         let driversLocation = JSON.parse(datas.driversLocation);
         // console.log(driversLocation);
-        driversLat = driversLocation.Lat + 0.001;
-        drivarsLan = driversLocation.Lan + 0.001;
-        callToAll();
+        driversLat = driversLocation.Lat + 0.0009;
+        drivarsLan = driversLocation.Lan + 0.0009;
+        displayMApWithPolyline();
         let SavedDriverNAme = connectedDriver;
         if (connectedDriver != "noData")
           SavedDriverNAme = JSON.parse(connectedDriver).driversName;

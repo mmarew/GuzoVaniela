@@ -4,6 +4,7 @@ let Lat = "",
   driversGuzoMarker = "",
   guzoMarker = "",
   guzoMap = "",
+  infowindow = "",
   driverCenter = "",
   driversLat = "";
 drivarsLan = "";
@@ -17,7 +18,7 @@ function navigtionTaller() {
   }
 }
 async function showLatAndLaong(Position) {
-  Lat =await Position.coords.latitude;
+  Lat = await Position.coords.latitude;
   Lan = await Position.coords.longitude;
 
   console.log(Lat, Lan);
@@ -41,19 +42,16 @@ function callGuzoMap() {
 function showGuzoMap(callFrom) {
   console.log(google);
   console.log(google.maps);
+
   guzoCenter = new google.maps.LatLng(Lat, Lan);
+  console.log("guzoCenter is " + guzoCenter);
   let mapDisplayerDiv = document.getElementById("mapDisplayerId");
-  
   let mapProp = {
     center: guzoCenter,
     zoom: 17,
     mapTypeId: "satellite",
   };
-  guzoMap = new google.maps.Map(
-    document.getElementById("mapDisplayerId"),
-    mapProp
-  );
-
+  guzoMap = new google.maps.Map(mapDisplayerDiv, mapProp);
   // driversLat = Lat + 0.0009;
   // drivarsLan = Lan + 0.0009;
   console.log(
@@ -64,8 +62,15 @@ function showGuzoMap(callFrom) {
     Position: guzoCenter,
     animation: google.maps.Animation.BOUNCE,
   });
+  guzoMarker.setMap(guzoMap);
+
+  infowindow = new google.maps.InfoWindow({
+    content: "you are here!",
+  });
+  infowindow.open(guzoMap, guzoMarker);
   callToAll();
 }
+
 function distance(lat1, lon1, lat2, lon2, unit) {
   var radlat1 = (Math.PI * lat1) / 180;
   var radlat2 = (Math.PI * lat2) / 180;
@@ -88,7 +93,7 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 // initialy
 
 let TimeCounter = 0;
-function callToAll() {
+function displayMApWithPolyline() {
   console.log("driversLat = " + driversLat, " drivarsLan=" + drivarsLan);
   // console.log("lat = " + Lat, " lan=" + Lan);
   Lat = Number(Lat);
@@ -115,13 +120,13 @@ function callToAll() {
       });
       driversGuzoMarker.setMap(guzoMap);
     }
-    var infowindow = new google.maps.InfoWindow({
+    infowindow = new google.maps.InfoWindow({
       content: "you are here!",
     });
 
     infowindow.open(guzoMap, guzoMarker);
 
-    var infowindow = new google.maps.InfoWindow({
+    infowindow = new google.maps.InfoWindow({
       content: "Driver is here!",
     });
 
