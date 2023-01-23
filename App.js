@@ -338,7 +338,9 @@ app.post("/cancelRequestByPassangers", (req, res) => {
     res.json({ title: "iiiiiiiiiiiiii" });
   });
 });
-
+app.post(`/updatePassangersProfile`, (req, res) => {
+  res.json(req.body);
+});
 function insertDriversInfo(id, driversLocation, res) {
   let Lat = JSON.parse(driversLocation).Lat,
     Lan = JSON.parse(driversLocation).Lan;

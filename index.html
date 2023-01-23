@@ -33,6 +33,9 @@
         <li class="mynavclass" id="mynavScerviceId">
           <a href="#scervices-section-id"> Scervices</a>
         </li>
+        <li class="mynavclass" id="passangersSetting">
+          <a href="#passangersSetting"> Settings</a>
+        </li>
       </ul>
     </nav>
     <main>
@@ -219,6 +222,28 @@
         </ol>
       </section>
       <!-- end to scervices section -->
+      <!--  start settings section-->
+      <section
+        class="Setting-section none-communication none-map"
+        id="setting-section-id"
+      >
+        <div class="edit-logout">
+          <button>
+            <a class="Logout">Logout</a>
+          </button>
+          <button class="editProfile" onclick="editProfile()">
+            <a>Edit profile</a>
+          </button>
+        </div>
+        <form onsubmit="submitUpdateProfile(event)" class="updateSettingForm">
+          <input id="fullName" type="fullname" placeholder="Full Name" />
+          <input id="tel" type="tel" placeholder="Phone number" />
+          <input id="email" type="email" placeholder="Email" />
+          <button id="submit" type="submit">update</button>
+        </form>
+        <!-- -->
+      </section>
+      <!-- end of settings section -->
     </main>
     <guzoMap id="google-map-section">
       <div id="mapDisplayerId"></div>

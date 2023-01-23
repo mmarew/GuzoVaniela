@@ -127,7 +127,10 @@ function passangersHashManager() {
   let myHash = location.hash;
   console.log("myhash", myHash);
   $("section").hide();
-  if (myHash == "#getTruck") {
+  if (myHash == "#passangersSetting") {
+    // alert(myHash);
+    $("#setting-section-id").show();
+  } else if (myHash == "#getTruck") {
     $(".communication-part").show();
   } else if (myHash == "#banner-section") {
     console.log("#banner-section");
@@ -347,7 +350,6 @@ function cancelPassangersRequest() {
   console.log(connectedDriver);
   console.log("ActivePassangersId = " + ActivePassangersId);
   let myCancel = confirm("Do you want to cancel this call?");
-
   if (myCancel) {
     if (connectedDriver == "noData") {
       // window.location.reload();
@@ -371,3 +373,40 @@ function cancelPassangersRequest() {
       });
   }
 }
+// setting section start here
+let editProfile = () => {
+  let element = document.getElementsByClassName("updateSettingForm")[0];
+  element.classList.toggle("showForm");
+  element = document.querySelector(".editProfile");
+  console.log(element);
+  element.classList.toggle("blue");
+};
+let submitUpdateProfile = (event) => {
+  event.preventDefault();
+  let fullName = $("#fullName").val(),
+    tel = $("#tel").val(),
+    email = $("#email").val();
+  fetch("http://localhost:1010/updatePassangersProfile", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      fullName: fullName,
+      tel: tel,
+      email: email,
+    }),
+  })
+    .then((data) => {
+      return data;
+    })
+    .then((data) => {
+      console.log(data);
+    });
+}; 
+
+// setting section ends here
+// group 2 beqalu vs ibro,
+// group 3 tewodaje
+// - we r seeing u , u progress lists

@@ -296,3 +296,49 @@ main section {
   max-width: 600px;
   border-radius: 20px;
 }
+/* setting sections */
+#setting-section-id {
+  background-color: white;
+  padding: 20px 10px;
+}
+.updateSettingForm {
+  display: none;
+  padding: 5px 25px;
+}
+.showForm {
+  display: flex;
+  flex-direction: column;
+}
+.updateSettingForm input {
+  margin: 10px auto;
+  padding: 8px;
+  width: 100%;
+  max-width: 300px;
+}
+.updateSettingForm button {
+  width: fit-content;
+  margin: auto;
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+.edit-logout {
+  display: flex;
+  justify-content: center;
+}
+.edit-logout button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: 0px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.blue {
+  background-color: blue;
+  color: white;
+}
+/* end of sections */
