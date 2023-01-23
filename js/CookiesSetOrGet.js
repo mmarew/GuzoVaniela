@@ -31,4 +31,5 @@ function getCookie(cname) {
 function deleteCookies(cookiesNAme) {
   document.cookie = `${cookiesNAme}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   document.cookie = `${cookiesNAme}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+  return "noData";
 }

@@ -8,16 +8,17 @@ let Lat = "",
   driversLat = "";
 drivarsLan = "";
 
+// check if geolocation is supported
 function navigtionTaller() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showLatAndLaong);
+    navigator.geolocation.getCurrentPosition(showLatAndLaong, showError);
   } else {
     console.log("geolocation is not supported here");
   }
 }
-function showLatAndLaong(Position) {
-  Lat = Position.coords.latitude;
-  Lan = Position.coords.longitude;
+async function showLatAndLaong(Position) {
+  Lat =await Position.coords.latitude;
+  Lan = await Position.coords.longitude;
 
   console.log(Lat, Lan);
   // if navigation is not finding lat and lng call to callGuzoMap() becuse it wait 1 seconds and check results
@@ -41,9 +42,8 @@ function showGuzoMap(callFrom) {
   console.log(google);
   console.log(google.maps);
   guzoCenter = new google.maps.LatLng(Lat, Lan);
-
   let mapDisplayerDiv = document.getElementById("mapDisplayerId");
-
+  
   let mapProp = {
     center: guzoCenter,
     zoom: 17,
@@ -60,6 +60,10 @@ function showGuzoMap(callFrom) {
     "distance between tow line ",
     distance(Lat, Lan, driversLat, drivarsLan, "K")
   );
+  guzoMarker = new google.maps.Marker({
+    Position: guzoCenter,
+    animation: google.maps.Animation.BOUNCE,
+  });
   callToAll();
 }
 function distance(lat1, lon1, lat2, lon2, unit) {
@@ -81,9 +85,11 @@ function distance(lat1, lon1, lat2, lon2, unit) {
   }
   return dist;
 }
+// initialy
+
 let TimeCounter = 0;
 function callToAll() {
-  // console.log("driversLat = " + driversLat, " drivarsLan=" + drivarsLan);
+  console.log("driversLat = " + driversLat, " drivarsLan=" + drivarsLan);
   // console.log("lat = " + Lat, " lan=" + Lan);
   Lat = Number(Lat);
   Lan = Number(Lan);
@@ -136,5 +142,22 @@ function callToAll() {
     }
   }
 }
-
 navigtionTaller();
+
+function showError(error) {
+  console.log(error);
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      x.innerHTML = "User denied the request for Geolocation.";
+      break;
+    case error.POSITION_UNAVAILABLE:
+      x.innerHTML = "Location information is unavailable.";
+      break;
+    case error.TIMEOUT:
+      x.innerHTML = "The request to get user location timed out.";
+      break;
+    case error.UNKNOWN_ERROR:
+      x.innerHTML = "An unknown error occurred.";
+      break;
+  }
+}

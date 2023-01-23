@@ -3,10 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Truck transport in ethiopia " />
-    <meta name="keywords" content="Transpot, Truck,Load,guzo, Guzoway, cargo" />
+    <meta
+      name="keywords"
+      content="Transport, Truck,Load,guzo, Guzoway, cargo"
+    />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Guzoway ICT</title>
+    <title>Guzoway technology</title>
     <script src="js/library/jquery-3.6.1.min.js"></script>
     <link rel="stylesheet" href="Css/Style.css" />
     <link
@@ -94,9 +97,11 @@
           </button>
 
           <div onclick="" id="find-truck-load-btn">
-           Connecting With Drivers, Please wait ...
+            Connecting With Drivers, Please wait ...
           </div>
-          <div onclick="cancelCallToDriver()" id="CancelRequest">Cancel This Call</div>
+          <div onclick="cancelCallToDriver()" id="CancelRequest">
+            Cancel This Call
+          </div>
         </div>
       </section>
       <!--it comes after  Get Truck  id="get-truck" btn is clicked. so communication with driver starts here -->
@@ -107,10 +112,10 @@
           <p id="driver-plate-number-now">plate :--------</p>
           <p id="driver-car-type-now">car Type : ----</p>
         </div>
+        <h4>driver is coming to you please wait ....</h4>
         <button onclick="cancelCallToDriver()" id="cancelCallToPassanger">
           Cancel this call
         </button>
-        <h4>driver is coming to you please wait ....</h4>
       </section>
 
       <!-- call section -->
@@ -125,6 +130,7 @@
               <span> Phone Guzoway </span>
             </a>
           </li>
+          <!-- <li><a href="sms:1234567?body=hello world">Send SMS</a></li> -->
           <li>
             <a href="https://telegram.me/Guzoway" class="fa fa-telegram"
               ><span>Telegram Guzoway</span></a
@@ -141,7 +147,7 @@
         </ul>
       </section>
 
-      <!-- scervice section -->
+      <!--start scervice section -->
       <section
         class="scervices-section none-communication none-map"
         id="scervices-section-id"
@@ -218,7 +224,7 @@
       <div id="mapDisplayerId"></div>
     </guzoMap>
     <footer></footer>
-    <script src="js/index.js"></script>
+    <!-- <script src="js/Passanger.js"></script> -->
     <script src="js/googleMap.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC25cJ6S9ZKoFroBrEVKabX0-hMlEJPx28&callback=callGuzoMap"></script>
   </body>

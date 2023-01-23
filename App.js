@@ -99,10 +99,14 @@ app.post("/drivers/register", (req, res) => {
 });
 ///////////////////////////////////////////////
 app.post("/getOnlineDrivers", (req, res) => {
-  let passangersId = req.body.passangersId;
+  let passangersId = req.body.passangersId,
+    Lat = req.body.Location.Lat,
+    Lan = req.body.Location.Lan;
+
   let sql = `create table if not exists onlineDrivers(onlineId int auto_increment,driversId varchar(255),
-    Status varchar(255),passangersId varchar(255),driversLocation varchar(255),passangersLocation varchar(255),passangersDestination varchar(255),passangersRequestTime varchar(255),
-    passangersDestinationTime varchar(255),primary key (onlineId))`;
+    Status varchar(255),passangersId varchar(255),driversLocation varchar(255),passangersLocation varchar(255),
+    passangersStandingPoint varchar(255),passangersDestination varchar(255),passangersRequestTime varchar(255),
+    passangersDestinationTime varchar(255), passangersLat varchar(255) , passangersLan varchar(255) ,driversLat varchar(255) , driversLan varchar(255) , primary key (onlineId))`;
   connection.query(sql, (err, result) => {
     if (err) console.log(err);
     else console.log(result);
@@ -124,7 +128,9 @@ app.post("/getOnlineDrivers", (req, res) => {
     } else {
       // get online driver
       let getDrivers = `select * from onlineDrivers join driversTable where onlineDrivers.driversId = 
-    driversTable.driversId and Status='active' limit 1 `;
+    driversTable.driversId and Status='active' and (driversLat<'${
+      Lat + 0.0001
+    }' and driversLan<'${Lan + 0.0001}') limit 1 `;
       let requestedOnlineId = 0;
       connection.query(getDrivers, (err, result) => {
         console.log(
@@ -156,7 +162,7 @@ app.post("/getOnlineDrivers", (req, res) => {
            */
           let updateDriversStatus = `update onlineDrivers set Status='requestedByPassangers', 
           passangersId='${passangersId}',passangersLocation='${passangersLocation}' ,
-          passangersDestination= '${toAddress}' where onlineId='${requestedOnlineId}'`;
+          passangersDestination= '${toAddress}',passangersStandingPoint='${fromAdress}' where onlineId='${requestedOnlineId}'`;
           connection.query(updateDriversStatus, (err, updateResult) => {
             if (err) console.log(err);
             console.log(updateResult);
@@ -228,7 +234,8 @@ app.post("/driverLogin", (req, res) => {
   // console.log("id is id " + id);
 });
 app.post("/checkPassangerRequestToDrivers", (req, res) => {
-  // console.log( req.body.driverId);
+  // console.log("Lat=" + req.body.Location.Lat, "Lan=" + req.body.Location.Lan);
+  // res.json(req.body);
   // return;
   let sql = `select * from onlineDrivers join PassangersTabel where (Status='requestedByPassangers' or Status='answeredToPassangers') and ID=passangersId and driversId='${req.body.driverId}' limit 1`;
   connection.query(sql, (err, result) => {
@@ -237,7 +244,7 @@ app.post("/checkPassangerRequestToDrivers", (req, res) => {
     if (result.length == 0) {
       let sql1 = `select * from onlineDrivers where driversId='${req.body.driverId}' and status='Active'`;
       connection.query(sql1, (err, driversResult) => {
-        console.log(driversResult);
+        // console.log(driversResult);
         if (driversResult.length == 0) {
           let driversLocation = JSON.stringify(req.body.Location);
           console.log(driversLocation);
@@ -263,9 +270,7 @@ app.post("/checkDriversDecision", (req, res) => {
   let PassangersId = req.body.ActivePassangersId,
     driversLocation = req.body.Location,
     connectedOnlineId = req.body.connectedOnlineId;
-  console.log(PassangersId);
-  // res.end("connectedOnlineId " + connectedOnlineId);
-  // return;
+
   if (connectedOnlineId != "noData") {
     // it check connected driver and aim is , if driver reject passangers call, passanger will be informed as driver rejected it
     let checkOnline = `select * from onlineDrivers join driversTable where
@@ -278,8 +283,15 @@ app.post("/checkDriversDecision", (req, res) => {
       } else {
         if (result.length > 0) {
           res.json(result);
+        } else {
+          let getDriversInfo = `select * from onlineDrivers join driversTable where
+  driversTable.driversId = onlineDrivers.driversId and passangersId='${PassangersId}' and (Status='requestedByPassangers' or Status='answeredToPassangers' or Status='Active') limit 1`;
+          connection.query(getDriversInfo, (err, result) => {
+            if (err) console.log(err);
+            console.log(result);
+            res.json(result);
+          });
         }
-        // else case
       }
     });
     return;
@@ -328,8 +340,12 @@ app.post("/cancelRequestByPassangers", (req, res) => {
 });
 
 function insertDriversInfo(id, driversLocation, res) {
-  let RegisterInDriver = `insert into onlineDrivers(driversId,Status,driversLocation) values ( '${id}', 
-  'Active' , '${driversLocation}')`;
+  let Lat = JSON.parse(driversLocation).Lat,
+    Lan = JSON.parse(driversLocation).Lan;
+  console.log("lat " + JSON.parse(driversLocation).Lat);
+  // res.json("driversLocation = " + driversLocation);
+  // return;
+  let RegisterInDriver = `insert into onlineDrivers(driversId,Status,driversLocation,driversLat,driversLan) values ( '${id}', 'Active' , '${driversLocation}','${Lat}','${Lan}')`;
   connection.query(RegisterInDriver, (Err, Result) => {
     if (Err) {
       console.log(Err);

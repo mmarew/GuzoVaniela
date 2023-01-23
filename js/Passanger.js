@@ -36,6 +36,7 @@ function checkIfPassangerAskedDriver() {
 }
 function searchTruck() {
   console.log(Lat, Lan);
+  // alert('lllllllllll')
   $("#CancelRequest").show();
   var fromAdress = $("#from-adress").val(),
     toAddress = $("#to-address").val(),
@@ -51,7 +52,7 @@ function searchTruck() {
     alert("phoneNumber is mandatory");
     $("#phone-number").css("border", "1px solid red ");
     error++;
-  } 
+  }
   if (error > 0) {
     $("#find-truck-load-btn").hide();
     $("#get-truck").show();
@@ -93,9 +94,7 @@ function searchTruck() {
         passangersStatus = "Initial";
         // clear if it was in interval requesting state
         clearInterval(setIntervalToDriversDecision);
-        setIntervalToDriversDecision = setInterval(() => {
-          checkDriversDecision();
-        }, 2000);
+        timeIntervalCounter();
       }
     });
 }
@@ -159,7 +158,6 @@ function passangersHashManager() {
   } else if (myHash == "") {
     if (ActivePassangersId == "noData") {
       // if there is no ActivePassangersId sign up and sign in  has to be show and booking has to be hidden
-
       $(".Book-now").hide();
       $(".goto-sign-up").show();
       $(".goto-log-in").show();
@@ -195,18 +193,29 @@ function cancelCallToDriver() {
       .then((data) => {
         console.log(data);
         // return;
+        window.location.href = "#";
+        $("#get-truck").show();
+        $("#find-truck-load-btn").hide();
+        $("#CancelRequest").hide();
+        clearInterval(setIntervalToDriversDecision);
+        deleteCookies("connectedOnlineId");
         deleteCookies("connectedDriver");
-        window.location.href = "/index.html";
+        connectedDriver = getCookie("connectedDriver");
+        connectedOnlineId = getCookie("connectedOnlineId");
+        setTimeout(timeIntervalCounter(), 3000);
+        // window.location.href = "/index.html";
         if (driversGuzoMarker != "") {
           driversGuzoMarker.setMap(null);
         }
       });
   }
 }
-let timeIntervalCounter = () => {};
-setIntervalToDriversDecision = setInterval(() => {
-  checkDriversDecision();
-}, 2000);
+let timeIntervalCounter = () => {
+  setIntervalToDriversDecision = setInterval(() => {
+    checkDriversDecision();
+  }, 2000);
+};
+timeIntervalCounter();
 let refCounter = true;
 function checkDriversDecision() {
   // -it is managed by setinterval to check drivers decision because driver may answer,
@@ -215,6 +224,7 @@ function checkDriversDecision() {
   // -it check decision by sending passangers id and search from online list
   // -if gettruck function can not get passangers checkdriver recheck it
   // - it check if drivers may changed his decision arrived on destination
+  console.log(ActivePassangersId, connectedOnlineId);
   fetch("http://localhost:1010/checkDriversDecision", {
     method: "POST",
     headers: {
@@ -231,9 +241,8 @@ function checkDriversDecision() {
     })
     .then((object) => {
       let datas = object[0];
-      console.log(object);
-      console.log("connectedOnlineId = ", connectedOnlineId);
-      // if passanger dosen't have data (no driver online ) object.length  is 0 so re request truck has to be done in if if (object.length == 0) {}
+      console.log(datas);
+      // if passanger dosen't have data (no driver online or no request from passangers) object.length  is 0 so re request truck has to be done in if (object.length == 0) {}
       // console.log("connectedDriver = " + getCookie("connectedDriver"));
       if (object.length == 0) {
         console.log(refCounter);
@@ -262,8 +271,12 @@ function checkDriversDecision() {
         }
         // window.location.href = "#book-section";
         checkIfPassangerAskedDriver();
-        callToAll();
-      } else {
+        // callToAll();
+      } else if (object.length > 0) {
+        let passangersDestination = datas.passangersDestination,
+          passangersStandingPoint = datas.passangersStandingPoint;
+        $("#from-adress").val(passangersStandingPoint);
+        $("#to-address").val(passangersDestination);
         console.log(datas.onlineId);
         setCookie("connectedOnlineId", datas.onlineId, 2 * 2);
         connectedOnlineId = getCookie("connectedOnlineId");
@@ -295,12 +308,16 @@ function checkDriversDecision() {
         let Status = object[0].Status;
         // based on status decision will be done here
         console.log("previousStatus = " + previousStatus);
+        if (Status == "canceledByPassangers") {
+          connectedOnlineId = deleteCookies("connectedOnlineId");
+          connectedDriver = deleteCookies("connectedDriver");
+        }
         if (Status == "RejectedByDriver") {
           clearInterval(setIntervalToDriversDecision);
           clearInterval(setIntervalToDriversDecision);
           console.log(Status);
-          deleteCookies("connectedOnlineId");
-          deleteCookies("connectedDriver");
+          connectedOnlineId = deleteCookies("connectedOnlineId");
+          connectedDriver = deleteCookies("connectedDriver");
           if (previousStatus == "answeredToPassangers") {
             // driver canceled after responce
             alert("Driver canceled your request");
@@ -335,7 +352,8 @@ function cancelPassangersRequest() {
 
   if (myCancel) {
     if (connectedDriver == "noData") {
-      window.location.reload();
+      // window.location.reload();
+      window.Location.href = "#";
     }
     fetch("http://localhost:1010/cancelRequestByPassangers", {
       method: "POST",
