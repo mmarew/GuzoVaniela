@@ -10,6 +10,7 @@ nav {
   opacity: 0.6;
   color: white;
   padding: 10px 0;
+  z-index: 10;
 }
 nav ul {
   display: flex;
@@ -23,8 +24,13 @@ nav ul {
   max-width: 400px;
   text-align: center;
   margin: 50px auto;
-  padding: 20px 3px;
+  padding: 20px 30px;
   border-radius: 20px;
+  position: absolute;
+  bottom: 10px;
+  z-index: 10;
+}
+main section {
 }
 .drivers-btn {
   border: 1px solid rgb(245, 245, 245);
@@ -58,6 +64,7 @@ nav ul {
   margin: 0 auto;
   background-color: rgb(245, 245, 245);
   padding: 30px 10px;
+  padding-right: 40px;
   text-align: center;
   border-radius: 20px;
   display: none;
@@ -77,4 +84,9 @@ nav ul {
 }
 .answer-decline {
   display: none;
+}
+main {
+  display: flex;
+  justify-content: center;
+  /* flex-direction: column; */
 }

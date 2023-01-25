@@ -339,7 +339,21 @@ app.post("/cancelRequestByPassangers", (req, res) => {
   });
 });
 app.post(`/updatePassangersProfile`, (req, res) => {
-  res.json(req.body);
+  let fullName = req.body.fullName,
+    tel = req.body.tel,
+    email = req.body.email,
+    ActivePassangersId = req.body.ActivePassangersId; 
+  let sql = `update passangerstabel set FullName='${fullName}', 
+  PhoneNumber='${tel}', 
+  Email='${email}' where ID='${ActivePassangersId}'`; // FullName,PhoneNumber,Email
+  // res.end(fullName + " = " + tel + " = " + email);
+  connection.query(sql, (err, result) => {
+    if (err) {
+      return err;
+    } else {
+      res.json(result);
+    }
+  });
 });
 function insertDriversInfo(id, driversLocation, res) {
   let Lat = JSON.parse(driversLocation).Lat,

@@ -51,9 +51,7 @@ function showGuzoMap(callFrom) {
     zoom: 17,
     mapTypeId: "satellite",
   };
-  guzoMap = new google.maps.Map(mapDisplayerDiv, mapProp);
-  // driversLat = Lat + 0.0009;
-  // drivarsLan = Lan + 0.0009;
+  guzoMap = new google.maps.Map(mapDisplayerDiv, mapProp);   
   console.log(
     "distance between tow line ",
     distance(Lat, Lan, driversLat, drivarsLan, "K")

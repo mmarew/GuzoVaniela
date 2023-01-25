@@ -386,6 +386,8 @@ let submitUpdateProfile = (event) => {
   let fullName = $("#fullName").val(),
     tel = $("#tel").val(),
     email = $("#email").val();
+  // alert("ActivePassangersId = " + ActivePassangersId);
+  // return;
   fetch("http://localhost:1010/updatePassangersProfile", {
     method: "POST",
     headers: {
@@ -396,17 +398,17 @@ let submitUpdateProfile = (event) => {
       fullName: fullName,
       tel: tel,
       email: email,
+      ActivePassangersId: ActivePassangersId,
     }),
   })
     .then((data) => {
-      return data;
+      return data.json();
     })
     .then((data) => {
-      console.log(data);
+      console.log("affectedRows " + data.affectedRows);
+      if (parseInt(data.affectedRows) == 1) {
+        alert("updated well");
+        document.querySelector(".editProfile").click(); 
+      }
     });
 }; 
-
-// setting section ends here
-// group 2 beqalu vs ibro,
-// group 3 tewodaje
-// - we r seeing u , u progress lists
