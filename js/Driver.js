@@ -1,12 +1,10 @@
 let Lat = "",
   Lan = "";
-function showLatAndLaong(Position) {
-  Lat = Position.coords.latitude;
-  Lan = Position.coords.longitude;
-  console.log(Lat, Lan);
+async function showLatAndLaong(Position) {
+  Lat = await Position.coords.latitude;
+  Lan = await Position.coords.longitude;
 }
 navigator.geolocation.getCurrentPosition(showLatAndLaong);
-
 let passangerInfo = "";
 let myIdInCookies = getCookie("ActiveDriverId");
 let DriversAction = getCookie("DriversAction");
@@ -98,6 +96,7 @@ let requestInterval = setInterval(function () {
 }, 3000);
 
 function checkCustomers() {
+  if (Lat == "" || Lan == "") return "Empty Lat and Lan";
   fetch("http://localhost:1010/checkPassangerRequestToDrivers", {
     method: "POST",
     headers: {
@@ -114,7 +113,17 @@ function checkCustomers() {
       return data.json();
     })
     .then((data) => {
-      console.log(data);
+      let rowPassangersLocation = JSON.parse(data[0].passangersLocation);
+      console.log(rowPassangersLocation);
+      let passangersLan = rowPassangersLocation.Lan,
+        passangersLat = rowPassangersLocation.Lat;
+      console.log(
+        "passangersLat = " + passangersLat,
+        " passangersLan=" + passangersLan
+      );
+      if (passangersLan !== null || passangersLat !== null) {
+        console.log("fine ");
+      }
       if (data.length == 0) {
         // deleteCookies("ActiveDriverId");
         myIdInCookies = getCookie("ActiveDriverId");
@@ -129,10 +138,11 @@ function checkCustomers() {
       } else {
         passangerInfo = data[0];
         console.log(passangerInfo);
-        if(passangerInfo==undefined)
-        return;
+        if (passangerInfo == undefined) return;
         // Status: "requestedByPassangers";
         // $("#TaxiCallerSound").get(0).play();
+        // passangersLan,passangersLat
+        showDriversAndPassangersInMap(passangersLan, passangersLat);
         if (passangerInfo.Status == "Active") {
           $(".customers-info").html("");
           $(".answer-decline").hide();
@@ -144,7 +154,7 @@ function checkCustomers() {
           // console.log(" ", passangerInfo.Status);
           // console.log("DriversAction", DriversAction);
         } else if (passangerInfo.Status == "answeredToPassangers") {
-          answerToCustomer('alreadyAnswered');
+          answerToCustomer("alreadyAnswered");
         }
       }
     });
@@ -154,3 +164,4 @@ function onDriversWindowClosed() {
   rejectCustomerCall();
   alert("Closed");
 }
+

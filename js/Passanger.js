@@ -130,9 +130,13 @@ function passangersHashManager() {
   if (myHash == "#passangersSetting") {
     // alert(myHash);
     $("#setting-section-id").show();
+    let element = document.getElementById("passangersSetting");
+    element.classList.add("activeClass");
   } else if (myHash == "#getTruck") {
     $(".communication-part").show();
   } else if (myHash == "#banner-section") {
+    let element = document.getElementById("mynavHomeId");
+    element.classList.add("activeClass");
     console.log("#banner-section");
     if (ActivePassangersId == "noData") {
       console.log(ActivePassangersId);
@@ -286,8 +290,8 @@ function checkDriversDecision() {
           plateNumber = datas.plateNumber;
         let driversLocation = JSON.parse(datas.driversLocation);
         // console.log(driversLocation);
-        driversLat = driversLocation.Lat + 0.0009;
-        drivarsLan = driversLocation.Lan + 0.0009;
+        driversLatInPassangers = driversLocation.Lat + 0.0009;
+        drivarsLanInPassanger = driversLocation.Lan + 0.0009;
         displayMApWithPolyline();
         let SavedDriverNAme = connectedDriver;
         if (connectedDriver != "noData")
@@ -377,10 +381,12 @@ function cancelPassangersRequest() {
 let editProfile = () => {
   let element = document.getElementsByClassName("updateSettingForm")[0];
   element.classList.toggle("showForm");
+
   element = document.querySelector(".editProfile");
   console.log(element);
   element.classList.toggle("blue");
 };
+
 let submitUpdateProfile = (event) => {
   event.preventDefault();
   let fullName = $("#fullName").val(),
@@ -408,7 +414,12 @@ let submitUpdateProfile = (event) => {
       console.log("affectedRows " + data.affectedRows);
       if (parseInt(data.affectedRows) == 1) {
         alert("updated well");
-        document.querySelector(".editProfile").click(); 
+        document.querySelector(".editProfile").click();
       }
     });
-}; 
+};
+let logoutPassangers = () => {
+  deleteCookies("ActivePassangersId");
+  window.location.href = "/";
+  alert("logoutPassangers logoutPassangers logoutPassangers logoutPassangers");
+};

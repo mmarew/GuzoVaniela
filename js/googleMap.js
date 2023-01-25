@@ -6,8 +6,8 @@ let Lat = "",
   guzoMap = "",
   infowindow = "",
   driverCenter = "",
-  driversLat = "";
-drivarsLan = "";
+  driversLatInPassangers = "";
+drivarsLanInPassanger = "";
 
 // check if geolocation is supported
 function navigtionTaller() {
@@ -42,7 +42,6 @@ function callGuzoMap() {
 function showGuzoMap(callFrom) {
   console.log(google);
   console.log(google.maps);
-
   guzoCenter = new google.maps.LatLng(Lat, Lan);
   console.log("guzoCenter is " + guzoCenter);
   let mapDisplayerDiv = document.getElementById("mapDisplayerId");
@@ -51,22 +50,21 @@ function showGuzoMap(callFrom) {
     zoom: 17,
     mapTypeId: "satellite",
   };
-  guzoMap = new google.maps.Map(mapDisplayerDiv, mapProp);   
+  guzoMap = new google.maps.Map(mapDisplayerDiv, mapProp);
   console.log(
     "distance between tow line ",
-    distance(Lat, Lan, driversLat, drivarsLan, "K")
+    distance(Lat, Lan, driversLatInPassangers, drivarsLanInPassanger, "K")
   );
   guzoMarker = new google.maps.Marker({
     Position: guzoCenter,
     animation: google.maps.Animation.BOUNCE,
   });
   guzoMarker.setMap(guzoMap);
-
   infowindow = new google.maps.InfoWindow({
     content: "you are here!",
   });
   infowindow.open(guzoMap, guzoMarker);
-  callToAll();
+  // callToAll();
 }
 
 function distance(lat1, lon1, lat2, lon2, unit) {
@@ -92,7 +90,10 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 
 let TimeCounter = 0;
 function displayMApWithPolyline() {
-  console.log("driversLat = " + driversLat, " drivarsLan=" + drivarsLan);
+  console.log(
+    "driversLatInPassangers = " + driversLatInPassangers,
+    " drivarsLanInPassanger=" + drivarsLanInPassanger
+  );
   // console.log("lat = " + Lat, " lan=" + Lan);
   Lat = Number(Lat);
   Lan = Number(Lan);
@@ -110,8 +111,11 @@ function displayMApWithPolyline() {
       animation: google.maps.Animation.BOUNCE,
     });
     guzoMarker.setMap(guzoMap);
-    if (driversLat != "" && drivarsLan != "") {
-      driverCenter = new google.maps.LatLng(driversLat, drivarsLan);
+    if (driversLatInPassangers != "" && drivarsLanInPassanger != "") {
+      driverCenter = new google.maps.LatLng(
+        driversLatInPassangers,
+        drivarsLanInPassanger
+      );
       driversGuzoMarker = new google.maps.Marker({
         Position: driverCenter,
         animation: google.maps.Animation.BOUNCE,
@@ -129,11 +133,16 @@ function displayMApWithPolyline() {
     });
 
     infowindow.open(guzoMap, driversGuzoMarker);
-    if (driversLat != "" && drivarsLan != "" && Lan != "" && Lat != "") {
+    if (
+      driversLatInPassangers != "" &&
+      drivarsLanInPassanger != "" &&
+      Lan != "" &&
+      Lat != ""
+    ) {
       var myTrip = [
         // Lat, Lan
         { lat: Lat, lng: Lan },
-        { lat: driversLat, lng: drivarsLan },
+        { lat: driversLatInPassangers, lng: drivarsLanInPassanger },
       ];
       var flightPath = new google.maps.Polyline({
         path: myTrip,

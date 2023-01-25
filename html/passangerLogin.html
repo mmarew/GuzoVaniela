@@ -34,7 +34,7 @@
         <input id="pin-code-to-login" type="text" />
       </div>
       <div id="adress-not-found">
-        Your address is not registered before.
+        Is your address not registered before?
         <a href="passangerRegister.html"> click here </a>to sign up now.
       </div>
     </section>
@@ -57,6 +57,10 @@
           })
           .then((myData) => {
             console.log(myData);
+            if (myData.length == 0) {
+              alert("please sign up first");
+              return;
+            }
             let cookiesId = myData[0].ID;
             console.log(cookiesId);
             setCookie("ActivePassangersId", cookiesId, 2 * 365);
